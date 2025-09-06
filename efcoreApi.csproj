@@ -32,4 +32,8 @@
     <Folder Include="Videos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="efcoreApi.sln" />
+  </ItemGroup>
+
 </Project>
