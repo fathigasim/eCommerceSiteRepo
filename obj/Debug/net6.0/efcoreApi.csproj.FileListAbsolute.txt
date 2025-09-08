@@ -281,3 +281,9 @@ C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\obj\Debug\net6.0\refint\
 C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\obj\Debug\net6.0\efcoreApi.pdb
 C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\obj\Debug\net6.0\efcoreApi.genruntimeconfig.cache
 C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\obj\Debug\net6.0\ref\efcoreApi.dll
+C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\bin\Debug\net6.0\Microsoft.Extensions.Caching.Redis.dll
+C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\USER\source\repos\fathigasim\eCommerceSiteRepo\bin\Debug\net6.0\StackExchange.Redis.StrongName.dll

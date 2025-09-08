@@ -92,6 +92,14 @@ builder.Services.AddAuthentication(
                //       .WithHeaders(HeaderNames.ContentType, "application/xml").AllowAnyMethod().WithExposedHeaders("X-Pagination"); ;
            });
     });
+    //add Cache
+    builder.Services.AddMemoryCache();
+//builder.Services.AddResponseCaching();
+    builder.Services.AddDistributedRedisCache(options =>
+    {
+    options.Configuration = "localhost:6379";
+    options.InstanceName = "";
+    });
 
     // Configure services``
     builder.Services.AddSingleton<JwtService>();
@@ -146,6 +154,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+//app.UseResponseCaching();
     app.Run();
 

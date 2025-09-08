@@ -593,6 +593,18 @@
         }
       }
     },
+    "/api/Goods/MemoryGoods": {
+      "get": {
+        "tags": [
+          "Goods"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Info": {
       "get": {
         "tags": [
@@ -1062,6 +1074,42 @@
       }
     },
     "/api/Order/CheckOut": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Order/OrderDistributedCache": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Order/OrderDistributedCache2": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Order/OrderResponseCache": {
       "get": {
         "tags": [
           "Order"

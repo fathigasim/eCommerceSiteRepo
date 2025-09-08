@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace efcoreApi.Models
+namespace efcoreApi.Models.VM
 {
-    [Table("Orders")]
-    public class Orders
+    public class OrderDto
     {
-        [Key]
         public string Id { get; set; }
-        //[Range(1, 10000)]
         public int OrdSeq { get; set; }
         public string? FirstName { get; set; }
 
@@ -22,7 +19,7 @@ namespace efcoreApi.Models
         public DateTime OrderDateTime { get; set; }
 
         public string RegisterId { get; set; }
-        public virtual Register Register { get; set; }
+       // public virtual Register Register { get; set; }
 
         [NotMapped]
         //[DisplayName("u Name")]
@@ -30,15 +27,14 @@ namespace efcoreApi.Models
         //[Display(Name= nameof(Order.Username),ResourceType =typeof(Resources.Orders))]
         public string Username { get; set; }
 
-        public virtual ICollection<OrderItems> OrderItems { get; set; }
+        public List<OrderItemDto> OrderItemsDto { get; set; }
 
-        public Orders()
+        public OrderDto()
         {
-              Id = Guid.NewGuid().ToString();
-            OrderItems = new List<OrderItems>();
-            OrderDateTime = DateTime.Now;
             
+            OrderItemsDto = new List<OrderItemDto>();
+            OrderDateTime = DateTime.Now;
+            //OrderItems = new List<OrderItem>();
         }
-
     }
 }

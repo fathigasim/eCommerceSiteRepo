@@ -5,6 +5,7 @@ using efcoreApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using NuGet.Packaging;
 using NuGet.Protocol;
@@ -25,12 +26,14 @@ namespace efcoreApi.Controllers
         FileService fileService;
         private readonly IWebHostEnvironment _env;
         IRepositoryBase<Goods> _repository;
-        public GoodsController(efContext _dbContext, FileService _fileService, IWebHostEnvironment env, IRepositoryBase<Goods> repository)
+        IMemoryCache memoryCache;
+        public GoodsController(efContext _dbContext, FileService _fileService, IWebHostEnvironment env, IRepositoryBase<Goods> repository, IMemoryCache _memoryCache)
         {
             dbContext = _dbContext;
             fileService = _fileService;
             _env = env;
             _repository = repository;
+            memoryCache=_memoryCache;
         }
         [AllowAnonymous]
         [HttpGet("GetAll")]
@@ -281,6 +284,22 @@ namespace efcoreApi.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+        [AllowAnonymous]
+        [HttpGet("MemoryGoods")]
+        public async Task<IActionResult> MemoryCache()
+        {
+            var cacheData = memoryCache.Get<IEnumerable<Goods>>("goods");
+            if (cacheData != null)
+            {
+                return Ok(cacheData);
+            }
+
+            //var expirationTime = DateTimeOffset.Now.AddMinutes(5.0);
+            var expirationTime = new MemoryCacheEntryOptions { AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(5.0),Priority=CacheItemPriority.High,SlidingExpiration=TimeSpan.FromMinutes(20) };
+            cacheData = await dbContext.goods.ToListAsync();
+            memoryCache.Set("goods", cacheData, expirationTime);
+            return Ok(cacheData);
         }
     }
 }

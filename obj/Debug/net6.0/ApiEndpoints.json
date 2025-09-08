@@ -383,6 +383,16 @@
   },
   {
     "ContainingType": "efcoreApi.Controllers.GoodsController",
+    "Method": "MemoryCache",
+    "RelativePath": "api/Goods/MemoryGoods",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "efcoreApi.Controllers.GoodsController",
     "Method": "GetName",
     "RelativePath": "api/Goods/SearchBy/{name}",
     "HttpMethod": "GET",
@@ -675,6 +685,36 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "efcoreApi.Controllers.OrderController",
+    "Method": "OrderDistributedCache",
+    "RelativePath": "api/Order/OrderDistributedCache",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "efcoreApi.Controllers.OrderController",
+    "Method": "OrderDistributedCache2",
+    "RelativePath": "api/Order/OrderDistributedCache2",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "efcoreApi.Controllers.OrderController",
+    "Method": "OrderResponseCache",
+    "RelativePath": "api/Order/OrderResponseCache",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

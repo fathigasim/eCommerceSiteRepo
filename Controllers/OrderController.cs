@@ -1,10 +1,15 @@
 ﻿using efcoreApi.BasketService;
 using efcoreApi.Data;
 using efcoreApi.Models;
+using efcoreApi.Models.VM;
 using efcoreApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using Stripe;
 using System.Net.Http;
 using System.Security.Claims;
 
@@ -17,11 +22,13 @@ namespace efcoreApi.Controllers
         readonly efContext dbContext;
         IBasketService basketService;
         IOrderService orderService;
-        public OrderController(efContext _dbContext,IBasketService _basketService, IOrderService _orderService)
+       private readonly IDistributedCache distributedCache;
+        public OrderController(efContext _dbContext,IBasketService _basketService, IOrderService _orderService, IDistributedCache _distributedCache)
         {
             dbContext = _dbContext;
             basketService = _basketService;
             orderService = _orderService;
+            distributedCache = _distributedCache;
         }
         [HttpGet("Orders")]
         public async Task<IActionResult> Get([FromQuery] GoodsParameters goodsParameters)
@@ -83,5 +90,83 @@ namespace efcoreApi.Controllers
             return BadRequest();
         }
 
+        [HttpGet("OrderDistributedCache")]
+        public async Task<IActionResult> OrderDistributedCache()
+        {
+            var cachedData = await distributedCache.GetStringAsync("DistributedOrder");
+            if (cachedData != null) {
+                return Ok(JsonConvert.DeserializeObject<IEnumerable<OrderDto>>(cachedData));
+            }
+            var expirationTime = TimeSpan.FromMinutes(5.0);
+            var orders = await dbContext.Order.Select(g=>new OrderDto {Id=g.Id,FirstName=g.FirstName,Surname=g.Surname,
+                OrderDateTime=g.OrderDateTime,OrderStatus=g.OrderStatus,OrdSeq=g.OrdSeq
+                ,RegisterId=g.RegisterId,Username=g.Username
+            }).ToListAsync();
+            //This avoids circular references because DTOs don’t contain navigation properties.
+            cachedData =JsonConvert.SerializeObject(orders);
+            var cacheOptions = new DistributedCacheEntryOptions().SetAbsoluteExpiration(expirationTime);
+            await distributedCache.SetStringAsync("DistributedOrder", cachedData, cacheOptions);
+                
+            return Ok(orders);
+        }
+        [HttpGet("OrderDistributedCache2")]
+        public async Task<IActionResult> OrderDistributedCache2()
+        {
+            var cachedData = await distributedCache.GetStringAsync("DistributedOrder2");
+            if (cachedData != null)
+            {
+                return Ok(JsonConvert.DeserializeObject<IEnumerable<Orders>>(cachedData));
+            }
+            var expirationTime = TimeSpan.FromMinutes(5.0);
+            //var orders = await dbContext.Order.Include(s => s.OrderItems).ThenInclude(g => g.Goods)
+            //    .Where(p => p.Id == string.)
+            //    .Select(p => new OrderDto
+            //    {
+            //        FirstName = p.FirstName,
+            //        OrderDateTime = p.OrderDateTime,
+            //        OrderStatus = p.OrderStatus,
+            //        OrdSeq = p.OrdSeq
+            //        , RegisterId = p.RegisterId,
+            //        Username = p.Username,
+            //        Surname = p.Surname,
+            //        OrderItemsDto = it.
+            //        o = p.OrderItems.Select(new OrderItemDto { GoodsId = i.})
+            //    }));
+            var orders = (from o in dbContext.Order
+                          join i in dbContext.OrderItems
+                         on o.Id equals i.OrderId
+                          select new OrderDto
+                          {
+                              FirstName = o.FirstName,
+                              Id = o.Id,
+                              Surname = o.Surname,
+                              OrderDateTime = o.OrderDateTime,
+                              OrderStatus = o.OrderStatus,
+                              OrdSeq = o.OrdSeq,
+                              Username = o.Username,
+                              RegisterId = o.RegisterId,
+                              OrderItemsDto = new List<OrderItemDto>
+                           {
+                               new OrderItemDto{GoodsId=i.GoodsId,GoodName=i.Goods.GoodsName,Quantity=i.Quantity,OrderId=i.OrderId}
+                           }
+                          });
+             //select new OrderItemDto { GoodsId = i.GoodsId,GoodName=i.Goods.GoodsName, OrderId = i.OrderId, Quantity = i.Quantity });
+             //This avoids circular references because DTOs don’t contain navigation properties.
+             cachedData = JsonConvert.SerializeObject(orders);
+            var cacheOptions = new DistributedCacheEntryOptions().SetAbsoluteExpiration(expirationTime);
+            await distributedCache.SetStringAsync("DistributedOrder2", cachedData, cacheOptions);
+
+            return Ok(orders);
+        }
+        [HttpGet("OrderResponseCache")]
+       // [ResponseCache(Location = ResponseCacheLocation.Any,Duration=10000)]
+        public async Task<IActionResult> OrderResponseCache()
+        {
+          
+            var orders = await dbContext.Order.ToListAsync();
+        
+
+            return Ok(orders);
+        }
     }
 }
