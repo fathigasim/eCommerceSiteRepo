@@ -192,18 +192,18 @@ namespace efcoreApi.Controllers
 
             //if (maxPrice.HasValue)
             //    query = query.Where(p => p.Price <= maxPrice.Value);
-            //foreach (var item in query)
-            //{
-            // var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Img", item.Imgpath);
-            // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            //var fileBytes = System.IO.File.ReadAllBytes(filePath);
-            //var base64String = Convert.ToBase64String(fileBytes);
-            //var mimeType = ContentType.GetContentType(item.Imgpath);
-            //var fullBase64 = $"data:{mimeType};base64,{base64String}";
-            //item.ImgSrc = fullBase64;
-            // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            //  fileModel.Add(new FileModel() { url = fullBase64 });
-            //  }
+            foreach (var item in query)
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Img", item.Imgpath);
+                // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var base64String = Convert.ToBase64String(fileBytes);
+                var mimeType = ContentType.GetContentType(item.Imgpath);
+                var fullBase64 = $"data:{mimeType};base64,{base64String}";
+                item.ImgSrc = fullBase64;
+                // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                //  fileModel.Add(new FileModel() { url = fullBase64 });
+            }
 
             var totalItems = query.Count();
             var items = query

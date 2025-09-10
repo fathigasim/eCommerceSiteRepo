@@ -87,7 +87,8 @@ builder.Services.AddAuthentication(
         options.AddPolicy(name: CoreApi,
            policy =>
            {
-               policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithExposedHeaders("X-Pagination");
+               policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+               .WithExposedHeaders("X-Pagination");
                //policy.WithOrigins("http://localhost")
                //       .WithHeaders(HeaderNames.ContentType, "application/xml").AllowAnyMethod().WithExposedHeaders("X-Pagination"); ;
            });
@@ -121,13 +122,13 @@ builder.Services.AddAuthentication(
         app.UseSwaggerUI();
     }
 //app.UseStaticFiles();
-app.UseStaticFiles(
-//    new StaticFileOptions
-//{
-//    FileProvider = new PhysicalFileProvider("Img"),
-//    RequestPath = "/StaticImages" // This is the URL path where images will be accessed (e.g., yourdomain.com/StaticImages/my-image.png)
-//}
-    );
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Img")),
+    RequestPath = "/images"
+});
+
 // Supported cultures
 var supportedCultures = new[]
 {

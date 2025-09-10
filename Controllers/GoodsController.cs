@@ -84,24 +84,37 @@ namespace efcoreApi.Controllers
             // GET: api/<GoodsController>
             //[Authorize(Roles = "1")]
             [AllowAnonymous]
-            [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var model = dbContext.goods.Include(p=>p.Category).ToList();
+            var model = await dbContext.goods.Include(p => p.Category).ToListAsync();
+
             foreach (var item in model)
             {
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Img", item.Imgpath);
-                // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-                var fileBytes = System.IO.File.ReadAllBytes(filePath);
-                var base64String = Convert.ToBase64String(fileBytes);
-                var mimeType = GetContentType(item.Imgpath);
-                var fullBase64 = $"data:{mimeType};base64,{base64String}";
-                item.ImgSrc = fullBase64;
-                // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-              //  fileModel.Add(new FileModel() { url = fullBase64 });
+                item.ImgSrc = $"{Request.Scheme}://{Request.Host}/images/{item.Imgpath}";
             }
+
             return Ok(model);
         }
+
+        //    [HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var model = dbContext.goods.Include(p=>p.Category).ToList();
+        //    foreach (var item in model)
+        //    {
+        //        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Img", item.Imgpath);
+        //        // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        //        var fileBytes = System.IO.File.ReadAllBytes(filePath);
+        //        var base64String = Convert.ToBase64String(fileBytes);
+        //        var mimeType = GetContentType(item.Imgpath);
+        //        var fullBase64 = $"data:{mimeType};base64,{base64String}";
+        //        item.ImgSrc = fullBase64;
+        //        // var imageFileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        //      //  fileModel.Add(new FileModel() { url = fullBase64 });
+        //    }
+        //    return Ok(model);
+        //}
         [AllowAnonymous]
         [HttpGet("Detail/{id}")]
         public async Task<IActionResult> Get([FromForm]int id)
