@@ -28,6 +28,7 @@ builder.Services.Configure<EmailSettings>(
 builder.Services.AddScoped<FileService>();
 builder.Services.AddScoped<IBasketService,BasketService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<PasswordResetService>();
 builder.Services.AddTransient<TripSender>();
 builder.Services.AddTransient<IEmailSender>(sp =>

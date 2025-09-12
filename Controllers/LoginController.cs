@@ -70,7 +70,7 @@ namespace efcoreApi.Controllers
                          new Claim(ClaimTypes.Name, userdb.Name),
                          new Claim(ClaimTypes.Role, userdb.role)
                     }),
-                            Expires = DateTime.Now.Add(TimeSpan.FromMinutes(20)),//DateTime.UtcNow.AddHours(1),
+                            Expires = DateTime.Now.Add(TimeSpan.FromMinutes(2)),//DateTime.UtcNow.AddHours(1),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                         };
 

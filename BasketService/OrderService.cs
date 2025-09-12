@@ -58,13 +58,13 @@ namespace efcoreApi.BasketService
                         await dbContext.OrderItems.AddRangeAsync(orderItems);
                         await dbContext.SaveChangesAsync();
                         await transaction.CommitAsync();
-                     //  await basketService.ClearBasket(httpContext);
+                       await basketService.ClearBasket(httpContext);
                        
                     }
                     catch (Exception ex)
                     {
                         await transaction.RollbackAsync();
-                       
+                       throw new Exception(ex.Message);
 
 
                     }

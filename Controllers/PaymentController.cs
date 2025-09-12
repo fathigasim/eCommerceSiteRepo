@@ -27,7 +27,7 @@ namespace efcoreApi.Controllers
         [HttpPost("create-checkout-session/{Id}")]
         public IActionResult CreateCheckoutSession(string Id)
         {
-            StripeConfiguration.ApiKey =configuration["Stripe:StripKey"]; // secret key
+            StripeConfiguration.ApiKey =configuration["Stripe:StripeKey"]; // secret key
 
             //var context = HttpContext.Request.HttpContext;
 

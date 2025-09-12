@@ -167,7 +167,7 @@ namespace efcoreApi.Controllers
 
             return Ok(result);
         }
-        [AllowAnonymous]
+        
         [HttpGet("ParamsFilter")]
         public async Task<ActionResult<PagedResult<Goods>>> ProductParamsSearch(string? search, string? category = null, int pageNumber = 1, int pageSize = 4)
         {

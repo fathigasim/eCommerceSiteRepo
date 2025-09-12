@@ -961,6 +961,32 @@
     ]
   },
   {
+    "ContainingType": "efcoreApi.Controllers.ReportController",
+    "Method": "GetDateAsync",
+    "RelativePath": "api/Report/OrderByDate",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dt",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "efcoreApi.Controllers.ReportController",
+    "Method": "GetAsync",
+    "RelativePath": "api/Report/OrderReport",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "efcoreApi.Controllers.SignUpController",
     "Method": "Post",
     "RelativePath": "api/SignUp",

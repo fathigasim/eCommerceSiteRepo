@@ -13,7 +13,7 @@ using System.Reflection;
 
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("0a8a3f9a-b8d4-4fc1-a420-0ebabbcb2f7a")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("efcoreApi")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4eec11300843cf80a5afccaef0eed8dd0bbb3cd1")]
 [assembly: System.Reflection.AssemblyProductAttribute("efcoreApi")]

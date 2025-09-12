@@ -282,15 +282,20 @@ namespace efcoreApi.BasketService
 
         public async Task ClearBasket(HttpContext httpContext)
         {
+
             Basket basket =await GetBasket(httpContext, false);
-            //var BasketItems = ItemsRepo.Query().Where(p => p.BasketId == basket.BasketId && p.UserAuthsId ==
-            //int.Parse(httpContext.User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value)).ToList();
-            var BasketItems = goodsContext.basketItems.Where(p => p.BasketId == basket.BasketId && p.RegisterId =="4a14066-a0").ToList();
-            goodsContext.RemoveRange(BasketItems);
-            //ItemsRepo.DeleteAll(BasketItems);
-            //basket.BasketItems.Clear();
-            goodsContext.SaveChanges();
-            // ItemsRepo.Commit();
+            try
+            {
+                var existUser = httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var BasketItems = goodsContext.basketItems.Where(p => p.BasketId == basket.BasketId && p.RegisterId == existUser).ToList();
+                goodsContext.RemoveRange(BasketItems);
+
+                goodsContext.SaveChanges();
+            }
+            catch (Exception ex) {
+                throw new Exception(ex.Message);
+            }
+            
         }
     }
 }
