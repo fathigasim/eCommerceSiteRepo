@@ -46,7 +46,7 @@ namespace efcoreApi.BasketService
                 order.Add(new OrderReportDto
                 {
                     OrderId = item.Id,
-                    OrderDate = item.OrderDateTime,
+                    OrderDate = item.OrderDateTime.Date,
                     Invoice = new Random().Next(999999999).ToString(),
                     Sequence = item.OrdSeq,
                     Status = item.OrderStatus,

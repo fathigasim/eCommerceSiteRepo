@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("efcoreApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4eec11300843cf80a5afccaef0eed8dd0bbb3cd1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+673af21aa72482e309544049336ce65c2db969ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("efcoreApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("efcoreApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
